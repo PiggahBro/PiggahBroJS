@@ -16,7 +16,7 @@ var <i>myElement</i> = PB.create.<i>element</i>();
 <li>canvas</li>
 </ul>
 
-<p>Go to my <a href="https://sites.google.com/site/piggahbro/projects/piggahbrojs">website</a> for more detail on how to use my library</p>
+<p>Go to my <a href="https://sites.google.com/site/piggahbro/projects/piggahbrojs" target="_Blank">website</a> for more detail on how to use my library</p>
 
 <h3>Lable Guide:</h3>
 <p>
