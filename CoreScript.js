@@ -63,7 +63,7 @@ var PB = {
       (document.getElementById(loc) || document.body).appendChild(newCanvas);
       return newCanvas;
     },
-  ctx: {
+    ctx: {
       new: function(cnvs) {
         var newCTX = document.getElementById(cnvs).getContext("2d");
         DS.CTXs.push(newCTX);
