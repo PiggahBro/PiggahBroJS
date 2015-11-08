@@ -69,7 +69,7 @@ var PB = {
         DS.CTXs.push(newCTX);
         return newCTX;
       },
-    filledCircle: function(x,y,r,c,ctx){
+      filledCircle: function(x,y,r,c,ctx){
         var CTX = ctx || DS.CTXs[0]
         CTX.fillStyle = c;
         CTX.beginPath();
