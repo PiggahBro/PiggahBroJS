@@ -9,7 +9,7 @@ var PB = {
       DS.Saves.push(obj);
     } else {
       for (i=0;i<DS.Saves.length;i++){
-        if(obj != DS.Saves[0]){
+        if(obj != DS.Saves[i]){
           DS.Saves.push(obj);
         } else {
           return;
