@@ -7,75 +7,71 @@ var PB = {
   save: function (obj){
     if (DS.Saves.length == 0){
       DS.Saves.push(obj);
+      console.log(obj + " has been saved!");
     } else {
       for (i=0;i<DS.Saves.length;i++){
         if(obj != DS.Saves[i]){
           DS.Saves.push(obj);
+          console.log(obj + " has been saved!");
         } else {
-          return;
+          console.log(obj + " is already saved!");
         }
       }
     }
   },
   load: function (num, loc){
-  (loc || document.body).appendChild(DS.Saves[num]);
+    if (DS.Saves.length > 0){
+      (loc || document.body).appendChild(DS.Saves[num]);
+      return console.log(DS.Saves[num] + " has been loaded!");
+    } else {
+      console.log("There is no item saved here!");
+    }
   },
   remove: function (obj, loc){
-  (loc || document.body).removeChild(obj);
+    (loc || document.body).removeChild(obj);
+    console.log(obj + " has been removed!");
   },
-  set: {
-    sizeMode: "px",
+  create: function(opts){
+    var Location = document.getElementById(opts.target) || document.body;
+    var element = document.createElement(opts.type);
+    element.id = opts.id || "my" + opts.type;
+    element.style.width = opts.width + "px" || window.width + "px";
+    element.style.height = opts.height + "px" || window.height + "px";
+    element.style.backgroundColor = opts.BGcolor || "";
+    element.style.fontSize = opts.fontSize + "px" || "16px"
+    element.style.color = opts.txtColor || "black";
+    element.innerHTML = opts.text || "";
+    Location.appendChild(element);
+    if (opts.type === "canvas"){
+      var newCTX = element.getContext("2d");
+      DS.CTXs.push(newCTX);
+    }
+    return element;
   },
-  create: { // Here you can see all my ".create" functions
-    h: function(txt,s,c,id,loc) { 
-      // in function under s, make it a number beteween 1-6
-      var newH = document.createElement("H" + s || "H1");
-      newH.id = id;
-      newH.style.color = c || "black";
-      newH.innerHTML = txt;
-      (document.getElementById(loc) || document.body).appendChild(newH);
-      return newH;
-    },
-    p: function(txt,s,c,id,loc) {
-      var newP = document.createElement("p");
-      newP.id = id;
-      newP.style.fontSize = s + "px" || "16px";
-      newP.style.color = c || "black";
-      newP.innerHTML = txt;
-      (document.getElementById(loc) || document.body).appendChild(newP);
-      return newP;
-    },
-    div: function(w,h,c,id,loc) {
-      var newDiv = document.createElement("div");
-      newDiv.id = id;
-      newDiv.style.width = w + "px";
-      newDiv.style.height = h + "px";
-      newDiv.style.backgroundColor = c;
-      (document.getElementById(loc) || document.body).appendChild(newDiv);
-      return nweDiv;
-    },
-    canvas: function(w,h,c,id,loc) {
-      var newCanvas = document.createElement("canvas");
-      newCanvas.id = id;
-      newCanvas.style.width = w + "px";
-      newCanvas.style.height = h + "px";
-      newCanvas.style.backgroundColor = c;
-      (document.getElementById(loc) || document.body).appendChild(newCanvas);
-      return newCanvas;
-    },
-    ctx: {
-      new: function(cnvs) {
-        var newCTX = document.getElementById(cnvs).getContext("2d");
-        DS.CTXs.push(newCTX);
-        return newCTX;
-      },
-      filledCircle: function(x,y,r,c,ctx){
-        var CTX = ctx || DS.CTXs[0]
-        CTX.fillStyle = c;
+  canvas: {
+    draw: {
+      circle: function(opts){
+        var CTX = DS.CTXs[opts.ctx];
+        CTX.fillStyle = opts.BGcolor;
         CTX.beginPath();
-        CTX.arc(x,y,r,0,2*Math.PI);
+        CTX.arc(opts.x,opts.y,opts.radius,0,2*Math.PI);
         CTX.fill();
         return CTX;
+      },
+      rect: function(opts){
+        var CTX = DS.CTXs[opts.ctx];
+        CTX.fillStyle = opts.BGcolor
+        CTX.fillRect(opts.x,opts.y,opts.width,opts.height);
+      },
+      square: function(opts){
+        var CTX = DS.CTXs[opts.ctx];
+        CTX.fillStyle = opts.BGcolor;
+        CTX.fillRect(opts.x,opts.y,opts.size,opts.size);
+      },
+      text: function(opts){
+        var CTX = DS.CTXs[opts.ctx];
+        CTX.font = opts.size || "16" + "px " + opts.font || "Arial";
+        CTX.fillText(opts.text,opts.x,opts.y)
       }
     }
   }
