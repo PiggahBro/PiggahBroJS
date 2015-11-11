@@ -39,7 +39,7 @@ var PB = {
     element.style.height = opts.height + "px" || window.height + "px";
     element.style.backgroundColor = opts.BGcolor || "";
     element.style.fontSize = opts.fontSize + "px" || "16px"
-    element.style.color = opts.txtColor || "black";
+    element.style.color = opts.textColor || "black";
     element.innerHTML = opts.text || "";
     Location.appendChild(element);
     if (opts.type === "canvas"){
@@ -48,31 +48,29 @@ var PB = {
     }
     return element;
   },
-  canvas: {
-    draw: {
-      circle: function(opts){
-        var CTX = DS.CTXs[opts.ctx];
-        CTX.fillStyle = opts.BGcolor;
-        CTX.beginPath();
-        CTX.arc(opts.x,opts.y,opts.radius,0,2*Math.PI);
-        CTX.fill();
-        return CTX;
-      },
-      rect: function(opts){
-        var CTX = DS.CTXs[opts.ctx];
-        CTX.fillStyle = opts.BGcolor
-        CTX.fillRect(opts.x,opts.y,opts.width,opts.height);
-      },
-      square: function(opts){
-        var CTX = DS.CTXs[opts.ctx];
-        CTX.fillStyle = opts.BGcolor;
-        CTX.fillRect(opts.x,opts.y,opts.size,opts.size);
-      },
-      text: function(opts){
-        var CTX = DS.CTXs[opts.ctx];
-        CTX.font = opts.size || "16" + "px " + opts.font || "Arial";
-        CTX.fillText(opts.text,opts.x,opts.y)
-      }
+  draw: {
+    circle: function(opts){
+      var CTX = DS.CTXs[opts.ctx];
+      CTX.fillStyle = opts.BGcolor;
+      CTX.beginPath();
+      CTX.arc(opts.x,opts.y,opts.radius,0,2*Math.PI);
+      CTX.fill();
+      return CTX;
+    },
+    rect: function(opts){
+      var CTX = DS.CTXs[opts.ctx];
+      CTX.fillStyle = opts.BGcolor
+      CTX.fillRect(opts.x,opts.y,opts.width,opts.height);
+    },
+    square: function(opts){
+      var CTX = DS.CTXs[opts.ctx];
+      CTX.fillStyle = opts.BGcolor;
+      CTX.fillRect(opts.x,opts.y,opts.size,opts.size);
+    },
+    text: function(opts){
+      var CTX = DS.CTXs[opts.ctx];
+      CTX.font = opts.size || "16" + "px " + opts.font || "Arial";
+      CTX.fillText(opts.text,opts.x,opts.y)
     }
   }
 }
