@@ -5,15 +5,16 @@ Not working in the head? Put it in the bottom of your "body" element.</p>
 <ul>
 <li>Create Elements Easily!</li>
 <li>Save, Load, and Remove elements with ease!</li>
+<li>Newly added area functions with formulas!</li>
 </ul>
 
 <h3>Examples:</h3>
 <p>
 How to use the <a href="https://sites.google.com/site/piggahbro/projects/piggahbrojs/using-create" target="_Blank">Create</a> function:</br>
-var <i>name</i> = new PB.create({ <br>
+var <i>name</i> = new PB.create({ <br><span style="text-indent: 2.5em;">
 type: "element", <br>
 BGcolor: "color", <br>
-id: "name", <br>
+id: "name", <br></span>
 });<br><br>
 How to use the <a href="https://sites.google.com/site/piggahbro/projects/piggahbrojs/using-slr" target="_Blank">Save, Load, and Remove</a> functions:<br>
 PB.save();<br>
