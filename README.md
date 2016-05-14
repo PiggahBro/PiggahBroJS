@@ -1,3 +1,5 @@
+<h2><i>Under Development!</i></h2>
+
 <h3>Getting the script</h3>
 <p>To use this script, at the bottom of the "body" element, add a "script" element with the src being http://piggahbro.comxa.com/api/PiggahBro.js</p>
 <h3>Current Features</h3>
@@ -21,5 +23,4 @@ PB.load();<br>
 PB.remove();
 </p>
 
-<p>Go to my <a href="https://github.com/PiggahBro/PiggahBroJS/wiki" target="_Blank">wiki</a> page for more detail on how to use my library.<br><br><br>
-Also visit my <a href="https://sites.google.com/site/piggahbro/projects/piggahbrojs/label-guide" target="_Blank">Label Guide</a> for help with parameters.</p>
+<p>Go to my <a href="https://github.com/PiggahBro/PiggahBroJS/wiki/API-Documentation" target="_Blank">wiki</a> page for more detail on how to use my library.
