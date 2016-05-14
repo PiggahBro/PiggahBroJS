@@ -1,6 +1,5 @@
 <h3>Getting the script</h3>
-<p>Inside the "head" element of your HTML file, add a "script" element with the src being https://googledrive.com/host/0B80_EGgfPXKpWlhUX1JUZkprclU<br>
-Not working in the head? Put it in the bottom of your "body" element.</p>
+<p>To use this script, at the bottom of the "body" element, add a "script" element with the src being http://piggahbro.comxa.com/api/PiggahBro.js</p>
 <h3>Current Features</h3>
 <ul>
 <li>Create Elements Easily!</li>
