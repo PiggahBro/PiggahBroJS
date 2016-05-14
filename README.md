@@ -21,5 +21,5 @@ PB.load();<br>
 PB.remove();
 </p>
 
-<p>Go to my <a href="https://sites.google.com/site/piggahbro/projects/piggahbrojs" target="_Blank">website</a> for more detail on how to use my library.<br><br><br>
+<p>Go to my <a href="https://github.com/PiggahBro/PiggahBroJS/wiki" target="_Blank">wiki</a> page for more detail on how to use my library.<br><br><br>
 Also visit my <a href="https://sites.google.com/site/piggahbro/projects/piggahbrojs/label-guide" target="_Blank">Label Guide</a> for help with parameters.</p>
