@@ -25,3 +25,8 @@
 <li>Added 6 area functions <i>(located using PB.math.area)</i></li>
 <li>Added formulas to area functions <i>(PB.math.area.formula)</i></li>
 </ul></p>
+<p>
+<i><b>Version 1.4</b></i>
+<ul>Minor Changes:
+<li>Created error calls when a mistake is made.</li>
+</ul></p>
