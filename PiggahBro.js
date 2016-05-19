@@ -1,7 +1,18 @@
-var DS = { // Piggah Bro's Data Store
-  CTXs: {},
-  Saves: {},
-};
+var DS = function(content) {
+  return content;
+}
+
+DS.prototype = {
+  add: function(name, content) {
+    this[name] = content || {};
+  },
+  remove: function(from, item) {
+    delete from[item];
+  }
+}
+
+var Saves = new DS();
+var CTXs = new DS();
 
 var PB = {
   math: {
@@ -51,22 +62,24 @@ var PB = {
   },
   save: function(obj) {
     if (document.getElementById(obj)) {
-      if (DS.Saves[obj] === undefined || null) {
-        DS.Saves[obj] = document.getElementById(obj);
+      if (Saves[obj] === undefined || null) {
+        Saves[obj] = document.getElementById(obj);
         console.log(obj + " has been saved!");
       } else {
         console.info(obj + " has already been saved!");
       }
+    } else if (Saves[obj]) {
+      console.info(obj + " has already been saved!");
     } else {
       console.error(obj + " is not a node!");
     }
   },
   load: function(obj, loc) {
-    if (DS.Saves[obj]) {
+    if (Saves[obj]) {
       if (document.getElementById(obj)) {
         console.info(obj + " has already been loaded or was never removed!");
       } else {
-        (document.getElementById(loc) || document.body).appendChild(DS.Saves[obj]);
+        (document.getElementById(loc) || loc || document.body).appendChild(Saves[obj]);
         console.log(obj + " has been loaded!");
       }
     } else {
@@ -76,51 +89,146 @@ var PB = {
   remove: function(obj, loc) {
     if (document.getElementById(obj)) {
       var object = document.getElementById(obj);
-      (document.getElementById(loc) || document.body).removeChild(document.getElementById(obj));
+      (document.getElementById(loc) || loc || document.body).removeChild(document.getElementById(obj));
       console.log(obj + " has been removed!");
     } else {
       console.info(obj + " either isn't a node or has already been removed!");
     }
   },
   create: function(opts) {
-    var Location = document.getElementById(opts.target) || document.body;
-    var element = document.createElement(opts.type);
-    element.id = opts.id || "my" + opts.type;
-    element.style.width = opts.width + "px" || window.width + "px";
-    element.style.height = opts.height + "px" || window.height + "px";
-    element.style.backgroundColor = opts.BGcolor || "black";
-    element.style.fontSize = opts.fontSize + "px" || "16px";
-    element.style.color = opts.textColor || "black";
-    element.innerHTML = opts.text || "";
-    Location.appendChild(element);
-    if (opts.type === "canvas") {
-      DS.CTXs[opts.ctx.name] = element.getContext("2d");
+    var Location = document.getElementById(opts.target) || opts.target || document.body;
+    // Tests to see if the type is a normal or special element.
+    switch (opts.type) {
+      case 'circle':
+        var element = document.createElement("div");
+        element.style.width = opts.radius * 2 + "px";
+        element.style.height = opts.radius * 2 + "px";
+        element.style.fontSize = opts.fontSize + "px" || opts.fontSize || "16px";
+        element.style.color = opts.textColor || "black";
+        element.style.borderRadius = opts.radius + "px" || opts.radius;
+        break;
+      case 'canvas':
+        var element = document.createElement(opts.type);
+        element.width = opts.width || window.width;
+        element.height = opts.height || window.height;
+        element.innerHTML = "Your browser does not support the HTML5 canvas tag.";
+
+        CTXs[(opts.ctx || opts.id)] = element.getContext("2d");
+        break;
+      default:
+        var element = document.createElement(opts.type);
+        element.style.width = opts.width + "px" || window.width + "px";
+        element.style.height = opts.height + "px" || window.height + "px";
+        element.style.fontSize = opts.fontSize + "px" || "16px";
+        element.style.color = opts.textColor || "black";
+        element.src = opts.src;
+        break;
     }
+
+    // Default Attributes
+    element.style.backgroundColor = opts.BGcolor || "";
+    element.id = opts.id || "my" + opts.type;
+    element.style.position = "absolute";
+    element.innerHTML = opts.text || "";
+
+    // Append, Log, & Return Element
+    Location.appendChild(element);
+    console.log(element.id + " has been created!");
     return element;
   },
-  draw: {
-    circle: function(opts) {
-      var CTX = DS.CTXs[opts.ctx];
-      CTX.fillStyle = opts.BGcolor;
-      CTX.beginPath();
-      CTX.arc(opts.x, opts.y, opts.radius, 0, 2 * Math.PI);
-      CTX.fill();
-      return CTX;
+  canvas: {
+    draw: function(ctx, opts) {
+      var CTX = CTXs[ctx];
+      switch (opts.type) {
+        case "circle":
+          CTX.beginPath();
+          CTX.fillStyle = opts.BGcolor;
+          CTX.arc(opts.x, opts.y, opts.radius, 0, 2 * Math.PI);
+          CTX.fill();
+          return {
+            "x": opts.x,
+            "y": opts.y,
+            "radius": opts.radius
+          };
+          break;
+        case "ellipse":
+          CTX.beginPath();
+          CTX.fillStyle = opts.BGcolor;
+          CTX.ellipse(opts.x, opts.y, opts.radiusX, opts.radiusY, opts.rotation * Math.PI / 180, 0, 2 * Math.PI);
+          CTX.fill();
+          return {
+            "x": opts.x,
+            "y": opts.y,
+            "radiusX": opts.radiusX,
+            "radiusY": opts.radiusY,
+            "rotation": opts.rotation
+          };
+          break;
+        case "rect":
+          CTX.beginPath();
+          CTX.fillStyle = opts.BGcolor;
+          CTX.fillRect(opts.x, opts.y, opts.width, opts.height);
+          return {
+            "x": opts.x,
+            "y": opts.y,
+            "width": opts.width,
+            "height": opts.height
+          };
+          break;
+        case "square":
+          CTX.beginPath();
+          CTX.fillStyle = opts.BGcolor;
+          CTX.fillRect(opts.x, opts.y, opts.size, opts.size);
+          return {
+            "x": opts.x,
+            "y": opts.y,
+            "width": opts.size,
+            "height": opts.size
+          };
+          break;
+        case "text":
+          CTX.beginPath();
+          CTX.font = opts.size || "16" + "px " + opts.font || "Arial";
+          CTX.fillText(opts.text, opts.x, opts.y);
+          return {
+            "text": opts.text,
+            "x": opts.x,
+            "y": opts.y
+          };
+          break;
+        case "line":
+          CTX.beginPath();
+          CTX.moveTo(opts.startX, opts.startY);
+          CTX.lineTo(opts.endX, opts.endY);
+          CTX.strokeStyle = opts.BGcolor;
+          CTX.lineWidth = opts.width || 1;
+          CTX.lineCap = opts.lineCap || "square";
+          CTX.stroke();
+          return {
+            "moveTo": {
+              "x": opts.startX,
+              "y": opts.startY
+            },
+            "lineTo": {
+              "x": opts.endY,
+              "y": opts.endY
+            }
+          };
+          break;
+      }
     },
-    rect: function(opts) {
-      var CTX = DS.CTXs[opts.ctx];
-      CTX.fillStyle = opts.BGcolor;
-      CTX.fillRect(opts.x, opts.y, opts.width, opts.height);
-    },
-    square: function(opts) {
-      var CTX = DS.CTXs[opts.ctx];
-      CTX.fillStyle = opts.BGcolor;
-      CTX.fillRect(opts.x, opts.y, opts.size, opts.size);
-    },
-    text: function(opts) {
-      var CTX = DS.CTXs[opts.ctx];
-      CTX.font = opts.size || "16" + "px " + opts.font || "Arial";
-      CTX.fillText(opts.text, opts.x, opts.y);
+    clear: function(ctx, opts) {
+      CTX = CTXs[ctx];
+      switch (opts.type) {
+        case "all":
+          CTX.clearRect(0, 0, CTX.canvas.width, CTX.canvas.height);
+          break;
+        case "section":
+          CTX.clearRect(opts.x, opts.y, opts.width, opts.height);
+          break;
+        default:
+          CTX.clearRect(0, 0, CTX.canvas.width, CTX.canvas.height);
+      }
     }
   }
 };
