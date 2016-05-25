@@ -15,6 +15,43 @@ var Saves = new DS();
 var CTXs = new DS();
 
 var PB = {
+	file: {
+		create: function(content, opts){			
+			// Generate data
+			var d = new Date()
+			var newBlob = new Blob([content], {type: "octet/stream"});
+			
+			if(opts && opts.download && opts.download === true){
+				PB.file.download(newBlob, opts.name);
+				return newBlob;
+			} else {
+				return newBlob;
+			}
+		},
+		download: function(file, name) {
+			c = confirm('Do you want to download ' + name + "?");
+			if(c === true){
+				// Generate data
+				url = window.URL.createObjectURL(file);
+				
+				//Create hidden link
+				var a = document.createElement('a');
+				a.style = "display: none";
+				a.id = 'downloadLink';
+        a.href = url;
+        a.download = name;
+				document.body.appendChild(a);
+				
+				// Download & Remove link
+        a.click();
+        window.URL.revokeObjectURL(url);
+				document.body.removeChild(document.getElementById('downloadLink'));
+			}
+		},
+		read: function(){
+
+		}
+	},
   math: {
     area: {
       square: function(x) {
