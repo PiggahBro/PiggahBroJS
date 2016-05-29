@@ -10,4 +10,4 @@ var request = PB.server.viewFile({ type: 'GET', url: 'http://piggahbro.comxa.com
 
 <p>This will popup a alert with the content of PiggahBroJS.</p>
 
-<p>To test this function, go to <a href='http://piggahbro.comxa.com/api/tryit.html' target='_blank'>http://piggahbro.comxa.com/api/tryit.html</a></p>
+<p>To test this function, go to <a href='http://piggahbro.comxa.com/api/tryit.html' target='_BLANK'>http://piggahbro.comxa.com/api/tryit.html</a></p>
