@@ -5,9 +5,9 @@
 <p>I have just created a addon for Server-Side JavaScript. This is just a quick demo and will be further developed! Below is a quick use of this addon.</p>
 
 <code>
-var request = PB.server.viewFile({ type: 'GET', url: 'http://piggahbro.comxa.com/api/piggahbro.js' });
+var request = PB.server.viewFile({ type: 'GET', url: 'http://piggahbrostudios.github.io/project/piggahbrojs/piggahbro.js' });
 </code>
 
 <p>This will popup a alert with the content of PiggahBroJS.</p>
 
-<p>To test this function, go to <a href='http://piggahbro.comxa.com/api/tryit.html' target='_BLANK'>http://piggahbro.comxa.com/api/tryit.html</a></p>
+<p>To test this function, go to <a href='http://piggahbro.comxa.com/api/tryit.html' target='_BLANK'>http://piggahbrostudios.github.io/project/piggahbrojs/tryit.html</a></p>
